@@ -51,3 +51,7 @@ node_modules/
 postgres_data/
 redis_data/
 
+# Swagger generated files (keep swagger.yaml template)
+docs/docs.go
+docs/swagger.json
+

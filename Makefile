@@ -1,4 +1,4 @@
-.PHONY: build run docker-up docker-down docker-build test clean
+.PHONY: build run docker-up docker-down docker-build test clean swagger
 
 build:
 	go build -o bin/server ./cmd/server
@@ -29,3 +29,11 @@ deps:
 	go mod download
 	go mod tidy
 
+swagger:
+	@echo "Installing swag..."
+	@go install github.com/swaggo/swag/cmd/swag@latest
+	@echo "Generating Swagger documentation..."
+	@swag init -g cmd/server/main.go -o docs
+
+swagger-serve: swagger
+	@echo "Swagger docs generated. Start server and visit http://localhost:8080/swagger/index.html"

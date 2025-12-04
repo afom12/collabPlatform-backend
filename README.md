@@ -14,6 +14,7 @@ A production-grade real-time collaboration platform backend built in Go, similar
 - **Secure Sharing**: Share documents with secure tokens and permissions
 - **Offline Support**: Queue operations for offline users
 - **JWT Authentication**: Secure token-based authentication
+- **API Documentation**: Interactive Swagger/OpenAPI documentation
 
 ### Architecture
 - **Clean Architecture**: Domain-driven design with clear separation of concerns
@@ -32,6 +33,7 @@ A production-grade real-time collaboration platform backend built in Go, similar
 - **Cache/PubSub**: Redis 7
 - **ORM**: GORM
 - **Authentication**: JWT
+- **API Documentation**: Swagger/OpenAPI
 - **Containerization**: Docker & Docker Compose
 
 ## 📋 Prerequisites
@@ -47,8 +49,8 @@ A production-grade real-time collaboration platform backend built in Go, similar
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd "GO project"
+   git clone https://github.com/afom12/collabPlatform-backend.git
+   cd collabPlatform-backend
    ```
 
 2. **Start services**
@@ -64,6 +66,11 @@ A production-grade real-time collaboration platform backend built in Go, similar
 3. **Check health**
    ```bash
    curl http://localhost:8080/health
+   ```
+
+4. **Access Swagger Documentation**
+   ```
+   http://localhost:8080/swagger/index.html
    ```
 
 ### Option 2: Local Development
@@ -83,12 +90,25 @@ A production-grade real-time collaboration platform backend built in Go, similar
    # Edit .env with your configuration
    ```
 
-4. **Run migrations** (auto-migrated on startup)
+4. **Generate Swagger documentation** (optional)
+   ```bash
+   make swagger
+   ```
+
+5. **Run the server**
    ```bash
    go run cmd/server/main.go
    ```
 
 ## 📡 API Endpoints
+
+### Interactive API Documentation
+
+Visit **http://localhost:8080/swagger/index.html** for interactive Swagger UI documentation where you can:
+- Browse all endpoints
+- Test API calls directly
+- View request/response schemas
+- Authenticate with JWT tokens
 
 ### Authentication
 
@@ -160,6 +180,27 @@ A production-grade real-time collaboration platform backend built in Go, similar
 }
 ```
 
+## 📚 Swagger Documentation
+
+### Setup Swagger
+
+1. **Install Swagger CLI**
+   ```bash
+   go install github.com/swaggo/swag/cmd/swag@latest
+   ```
+
+2. **Generate Documentation**
+   ```bash
+   make swagger
+   # Or manually: swag init -g cmd/server/main.go -o docs
+   ```
+
+3. **Access Swagger UI**
+   - Start the server
+   - Visit: `http://localhost:8080/swagger/index.html`
+
+See [SWAGGER_SETUP.md](SWAGGER_SETUP.md) for detailed instructions.
+
 ## 🏗 Project Structure
 
 ```
@@ -185,6 +226,7 @@ A production-grade real-time collaboration platform backend built in Go, similar
 │       │   ├── handlers/
 │       │   └── middleware/
 │       └── websocket/
+├── docs/                        # Swagger documentation
 ├── docker-compose.yml
 ├── Dockerfile
 ├── go.mod
@@ -235,7 +277,12 @@ curl -X POST http://localhost:8080/api/v1/documents \
   }'
 ```
 
-### 4. Connect via WebSocket
+### 4. Test with Swagger UI
+- Visit `http://localhost:8080/swagger/index.html`
+- Click "Authorize" and enter your JWT token
+- Test endpoints directly from the UI
+
+### 5. Connect via WebSocket
 Use a WebSocket client or browser console:
 ```javascript
 const ws = new WebSocket('ws://localhost:8080/api/v1/ws?token=<your-token>&document_id=<doc-id>');
@@ -284,3 +331,9 @@ This is a showcase project demonstrating advanced Go backend engineering concept
 - [ ] Search functionality
 - [ ] Export/Import features
 
+## 📖 Documentation
+
+- [README.md](README.md) - This file
+- [QUICKSTART.md](QUICKSTART.md) - Quick start guide
+- [SWAGGER_SETUP.md](SWAGGER_SETUP.md) - Swagger documentation setup
+- [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) - Architecture overview
